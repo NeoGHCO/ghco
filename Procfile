@@ -1,2 +1,2 @@
 worker: node index.js
-page: py index.py
+page: python index.py
