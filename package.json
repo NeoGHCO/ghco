@@ -1,0 +1,44 @@
+{
+  "name": "ghco",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "17.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.9.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "@discordjs/voice": "^0.7.5",
+    "@distube/soundcloud": "^1.0.0",
+    "@distube/spotify": "^1.0.0",
+    "@sapphire/snowflake": "^3.0.1",
+    "discord-api-types": "^0.25.2",
+    "discord-canvas": "^1.4.1",
+    "discord-tts": "^1.2.1",
+    "discord-voice": "^2.0.6",
+    "discord.js": "^13.3.1",
+    "distube": "^3.0.7",
+    "dotenv": "^10.0.0",
+    "ffmpeg-static": "^4.4.0",
+    "google": "^2.1.0",
+    "google-it": "^1.6.2",
+    "google-search-scraper": "^0.1.0",
+    "googleapis": "^92.0.0",
+    "libsodium-wrappers": "^0.7.9",
+    "morse": "^0.1.0",
+    "morsify": "^2.4.0",
+    "youtube-search": "^1.1.6",
+    "yt-search": "^0.1.1",
+    "ytdl-core": "^4.9.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0"
+  }
+}

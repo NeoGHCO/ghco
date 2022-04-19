@@ -1,0 +1,82 @@
+//const in the top of the bot
+
+const fs = require('fs');
+const { Client, Intents, Guild, guilds , Collection } = require('discord.js');
+const { token } = require('./config.json');
+const { prefix } = require('./config.json');
+const { owner } = require('./config.json');
+const { MessageEmbed } = require('discord.js');
+const path = require('path');
+
+const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MEMBERS" ] });
+
+client.commands = new Collection();
+client.events = new Collection();
+
+//commandHandler Example
+
+//Cargar commands y ignorar los que no existan (By SirDevi)
+
+client.on('messageCreate', message => {
+
+    if (message.author.bot) return;
+
+    if (message.content.startsWith(prefix)) {
+
+        const args = message.content.slice(prefix.length).split(/ +/);
+
+        const commandName = args.shift().toLowerCase();
+
+        const command = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+        try {
+
+            if (!command) return;
+
+            const commandFile = require(`./commands/${commandName}.js`);
+
+            commandFile.execute(message, args);
+
+        } catch (err) {
+
+            if (err.message.includes('Cannot find module')) {
+
+                const embed = new MessageEmbed()
+                    .setColor('#FF37FF')
+                    .setTitle('')
+                    .setDescription('')
+                    .setFields(
+                      { name: 'Error al ejecutar el comando', value: 'El comando **' + commandName + '** no existe' }
+                    )
+                    .setTimestamp()
+                    .setFooter('By: GHCO');
+                message.channel.send({embeds: [embed]});
+
+                console.log(`${message.author.tag} ha intentado ejecutar el comando ${commandName} pero no existe`);
+
+                return;
+            
+            } else {
+
+                console.log(err);
+
+                const embed = new MessageEmbed()
+                    .setColor('#FF37FF')
+                    .setTitle('')
+                    .setDescription('')
+                    .setFields(
+                        { name: 'Error al ejecutar el comando', value: 'Ha ocurrido un error al ejecutar el comando **' + commandName + '**, si el error persiste contacta con un administrador o con un desarrollador de este bot' }
+                    )
+                    .setTimestamp()
+                    .setFooter('By: GHCO');
+                message.channel.send({embeds: [embed]});
+
+                return;
+            }
+        }
+
+        console.log(`${message.author.tag} ejecuto el comando: ${commandName}`);
+
+    }
+
+});

@@ -1,0 +1,14 @@
+//este es el cuerpo que se usara para la mayoria de todos los embeds hechos en este proyecto
+
+const { MessageEmbed } = require('discord.js');
+
+const embed = new MessageEmbed()
+    .setColor('#ff37ff')
+    .setTitle('')
+    .setDescription('')
+    .addFields(
+        { name: '', value: '' },
+    )
+    .setTimestamp()
+    .setFooter('By: GHCO');
+message.channel.send({embeds: [embed]});
