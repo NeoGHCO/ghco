@@ -1,2 +1,2 @@
 worker: node index.js
-web: gunicorn index.py
+web: gunicorn run:app
