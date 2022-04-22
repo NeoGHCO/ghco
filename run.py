@@ -22,10 +22,5 @@ def team():
 def projects():
     return render_template('projects.html')
 
-    
-@app.route('/unam')
-def projects():
-    return render_template('unam.html')
-
 if __name__ == '__main__':
     app.run(debug=False, port=5000)
