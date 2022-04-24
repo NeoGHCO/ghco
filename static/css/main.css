@@ -34,6 +34,7 @@ body {
 
 .container
 {
+    position: absolutes;
     animation: transitionIn 2s;
     width: 100%;
     display: inline;
@@ -126,7 +127,9 @@ footer{
     right: 0;
     left: 0;
     margin-top: 80px;
-    background: #111;
+    background: #ff00cc;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #333399, #ff00cc);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #333399, #ff00cc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: auto;
     width: 100%;
     font-family: "Open Sans";
