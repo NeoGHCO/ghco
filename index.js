@@ -41,6 +41,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
     if (message.author.bot) return;
+    if (message.mentions.has("everyone")) return;
     if (message.mentions.has(client.user, { ignoreRoles: true })) {
         const embed = new MessageEmbed()
             .setColor('#ff37ff')

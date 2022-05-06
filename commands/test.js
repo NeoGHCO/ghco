@@ -1,18 +1,18 @@
 const { Discord, Client, Intents, Guild, Collection, Message, User } = require('discord.js');
 const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
 const { MessageEmbed } = require('discord.js');
-const owner = "479486270452531200";
 const fs = require('fs');
 // usar el file system para leer el archivo de configuracion
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 const prefix = config.prefix;
+const ownerid = config.ownerid;
 
 module.exports = {
     name: "test",
     description: "comando de prueba",
     execute(message, args) {
 
-        if (message.author.id == owner) {
+        if (message.author.id == ownerid) {
             
             message.channel.send("prefijo: " + prefix);
 
