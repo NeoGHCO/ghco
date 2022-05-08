@@ -12,11 +12,12 @@ module.exports = {
             .setTitle('GHCO Team')
             .setDescription('')
             .addFields(
-                { name: 'Estado de solicitudes', value: 'solicitudes cerradas', inline: true },
-                { name: 'Fundador', value: 'Sir. Million', inline: true },
+                { name: 'Estado de solicitudes', value: 'Solicitudes abiertas en el servidor de discord de GHCO Team', inline: true },
                 { name: 'Objetivo', value: 'Formar un grupo de desarrollo para crear distintas aplicaciones que sean utiles a los usuarios en general', inline: true },
-                { name: 'Actual lider', value: 'Sir. Million', inline: true },
-                { name: 'Miembros', value: 'Sir. Million' + '\n' + 'Sky', inline: true },
+                { name: 'Fundador', value: 'Sir_Million'},
+                { name: 'Actual lider', value: 'Sir_Million', inline: true },
+                { name: 'Sitio Web de GHCO Team', value: '[GHCO Team Website](https://ghco.glitch.me/)', inline: true },
+                { name: 'Miembros', value: 'Sir_Million' + '\n' + 'Sky'},
             )
             .setImage('https://i.imgur.com/TEZZFGj.png')
             .setTimestamp()
