@@ -16,7 +16,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setColor('#FF37FF')
-            .setAuthor('Prefixo: ' + prefix)
+            .setAuthor('Prefijo: ' + prefix)
             .setTitle('Comandos')
             .setDescription('Lista de comandos disponibles')
             .addField('Utilidad', 'help' + '\n' + 'info' + '\n' + 'userinfo' + '\n' + 'ping' + '\n' + 'avatar' + '\n' + 'getinfo' + '\n' + 'morse' + '\n' + 'team' + '\n' + 'randomhex' + '\n' + 'hex', inline = true)
