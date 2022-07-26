@@ -1,13 +1,11 @@
 const fs = require('fs');
-const { Client, Intents, Guild, guilds , Collection } = require('discord.js');
-const { token } = require('./config.json');
-const { prefix } = require('./config.json');
-const { owner } = require('./config.json');
-const { MessageEmbed } = require('discord.js');
+const { Discord, MessageEmbed, Collection } = require('discord.js');
+const { token, prefix, owner } = require('./config.json');
 const path = require('path');
 const { ready } = require('libsodium-wrappers');
 
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MEMBERS" ] });
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildBans,GatewayIntentBits.GuildEmojisAndStickers , GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks, GatewayIntentBits.GuildInvites, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions, GatewayIntentBits.DirectMessageTyping, GatewayIntentBits.MessageContent], partials: [Partials.Channel, Partials.User, Partials.GuildMember, Partials.Message, Partials.Reaction] });
 
 client.commands = new Collection();
 client.events = new Collection();
@@ -43,7 +41,7 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return;
     if (message.mentions.has("everyone")) return;
     if (message.mentions.has(client.user, { ignoreRoles: true })) {
-        const embed = new MessageEmbed()
+        /* const embed = new MessageEmbed()
             .setColor('#ff37ff')
             .setThumbnail(client.user.avatarURL())
             .setTitle('GHCO')
@@ -56,39 +54,8 @@ client.on('messageCreate', async message => {
             )
             .setTimestamp()
             .setFooter('By: GHCO Team');
-        message.channel.send({embeds: [embed]});
-    }
-});
-
-//piedra papel o tijera
-client.on('messageCreate', async message => {
-    if (message.author.bot) return;
-    if (message.content.startsWith(`${prefix}`)) return;
-    let response = ['Piedra', 'Papel', 'Tijera'];
-    let random = response[Math.floor(Math.random() * response.length)];
-    if (message.content.startsWith('piedra')) {
-        const embed = new MessageEmbed()
-            .setColor('#ff37ff')
-            .setTitle(`${random}`)
-            .setTimestamp()
-            .setFooter('By: GHCO');
-        message.channel.send({embeds: [embed]});
-    }
-    if (message.content.startsWith('papel')) {
-        const embed = new MessageEmbed()
-            .setColor('#ff37ff')
-            .setTitle(`${random}`)
-            .setTimestamp()
-            .setFooter('By: GHCO');
-        message.channel.send({embeds: [embed]});
-    }
-    if (message.content.startsWith('tijera')) {
-        const embed = new MessageEmbed()
-            .setColor('#ff37ff')
-            .setTitle(`${random}`)
-            .setTimestamp()
-            .setFooter('By: GHCO');
-        message.channel.send({embeds: [embed]});
+        message.channel.send({embeds: [embed]}); */
+        message.reply('Bot temporalmente fuera de servicio, disculpe las molestias y gracias por su compresion.');
     }
 });
 
@@ -104,13 +71,13 @@ client.on('messageCreate', message => {
 
         const commandName = args.shift().toLowerCase();
 
-        const command = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+        const command = fs.readdirSync('./working-commands').filter(file => file.endsWith('.js'));
 
         try {
 
             if (!command) return;
 
-            const commandFile = require(`./commands/${commandName}.js`);
+            const commandFile = require(`./working-commands/${commandName}.js`);
 
             commandFile.execute(message, args);
 
@@ -118,16 +85,8 @@ client.on('messageCreate', message => {
 
             if (err.message.includes('Cannot find module')) {
 
-                const embed = new MessageEmbed()
-                    .setColor('#FF37FF')
-                    .setTitle('')
-                    .setDescription('')
-                    .setFields(
-                      { name: 'Error al ejecutar el comando', value: 'El comando **' + commandName + '** no existe' }
-                    )
-                    .setTimestamp()
-                    .setFooter('By: GHCO');
-                message.channel.send({embeds: [embed]});
+                message.reply('El comando no existe');
+                message.channel.send('Error:' + err);
 
                 console.log(`${message.author.tag} ha intentado ejecutar el comando ${commandName} pero no existe`);
 
@@ -137,16 +96,8 @@ client.on('messageCreate', message => {
 
                 console.log(err);
 
-                const embed = new MessageEmbed()
-                    .setColor('#FF37FF')
-                    .setTitle('')
-                    .setDescription('')
-                    .setFields(
-                        { name: 'Error al ejecutar el comando', value: 'Ha ocurrido un error al ejecutar el comando **' + commandName + '**, si el error persiste contacta con un administrador o con un desarrollador de este bot' }
-                    )
-                    .setTimestamp()
-                    .setFooter('By: GHCO');
-                message.channel.send({embeds: [embed]});
+                message.reply('Ha ocurrido un error al ejecutar el comando');
+                message.channel.send('Error:' + err);
 
                 return;
             }
