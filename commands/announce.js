@@ -1,7 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
-const { Permissions } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "announce",
@@ -20,12 +17,12 @@ module.exports = {
             return;
         }
         const channel = message.mentions.channels.first();
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('Anuncio')
             .setDescription(args.slice(1).join(' '))
             .setTimestamp()
-            .setFooter('Anuncio enviado por ' + message.author.username, message.author.avatarURL());
+            .setFooter({ text: 'Anuncio hecho por: ' + message.author.username, icon_url: message.author.avatarURL() });
         channel.send({embeds: [embed]});
         message.delete();
         message.channel.send("Anuncio enviado");

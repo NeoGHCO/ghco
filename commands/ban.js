@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection, Message } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { Permissions } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "ban",
@@ -17,6 +15,12 @@ module.exports = {
             return;
         }
 
+        //verificar si el usuario es el autor del mensaje
+        if (member.id === message.author.id) {
+            message.channel.send("No puedes banearte a ti mismo");
+            return;
+        }
+
         if (!member.bannable) {
             message.channel.send("No puedo banear a este usuario");
             return;
@@ -30,7 +34,7 @@ module.exports = {
 
         member.ban(reason)
             .catch(error => message.channel.send(`No puedo banear a '${member.user.tag}' por: ${error}`));
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('Baneado')
             .setDescription(`Un usuario ha sido baneado por ${message.author.tag}`)
@@ -40,7 +44,7 @@ module.exports = {
                 { name: 'Fecha', value: message.createdAt.toLocaleString(), inline: true },
             )
             .setTimestamp()
-            .setFooter('By: GHCO');
+            .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
         message.channel.send({embeds: [embed]});
     }
 };

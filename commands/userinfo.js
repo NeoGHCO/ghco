@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection, Message } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "userinfo",
@@ -11,7 +9,7 @@ module.exports = {
 
         let user = message.mentions.users.first() || message.author;
         let avatar = user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 });
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setTitle(`Informacion de ${user.username}`)
             .setThumbnail(avatar)
             .setColor('#FF37FF')
@@ -22,7 +20,7 @@ module.exports = {
                 { name: 'Cuenta creada', value: user.createdAt.toLocaleDateString(), inline: true },
             )
             .setTimestamp()
-            .setFooter('By: GHCO | Pedido por: ' + message.author.username);
+            .setFooter({ text: 'By: GHCO | Pedido por: ' + message.author.username, iconURL: message.author.displayAvatarURL() });
         message.channel.send({embeds: [embed]});
 
     }

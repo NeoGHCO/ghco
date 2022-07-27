@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "8ball",
@@ -8,12 +6,12 @@ module.exports = {
     execute(message, args) {
 
         if (!args[0]) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#FF37FF')
                 .setTitle('Error')
                 .setDescription('Debes preguntarme algo')
                 .setTimestamp()
-                .setFooter('By: GHCO');
+                .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
             message.channel.send({embeds: [embed]});
             return;
         }
@@ -34,12 +32,12 @@ module.exports = {
             }
         }
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('8Ball')
             .setDescription(randomMessage())
             .setTimestamp()
-            .setFooter('By: GHCO');
+            .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
         message.channel.send({embeds: [embed]});
     }
 }

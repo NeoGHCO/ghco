@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Discord, MessageEmbed, Collection } = require('discord.js');
+const { Discord, EmbedBuilder, Collection } = require('discord.js');
 const { token, prefix, owner } = require('./config.json');
 const path = require('path');
 const { ready } = require('libsodium-wrappers');
@@ -31,7 +31,7 @@ client.on('ready', () => {
         const randomIndex = Math.floor(Math.random() * activities.length - 1) + 1;
         const NewActivity = activities[randomIndex];
 
-        client.user.setActivity(NewActivity, { type: 'WATCHING' });
+        client.user.setActivity(NewActivity, { type: 'PLAYING' });
     }, 5000);
 });
 
@@ -41,7 +41,7 @@ client.on('messageCreate', async message => {
     if (message.author.bot) return;
     if (message.mentions.has("everyone")) return;
     if (message.mentions.has(client.user, { ignoreRoles: true })) {
-        /* const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#ff37ff')
             .setThumbnail(client.user.avatarURL())
             .setTitle('GHCO')
@@ -53,9 +53,8 @@ client.on('messageCreate', async message => {
                 { name: 'Sitio web', value: 'https://ghco.weebly.com/', inline: true }
             )
             .setTimestamp()
-            .setFooter('By: GHCO Team');
-        message.channel.send({embeds: [embed]}); */
-        message.reply('Bot temporalmente fuera de servicio, disculpe las molestias y gracias por su compresion.');
+            .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
+        message.channel.send({embeds: [embed]});
     }
 });
 
@@ -71,13 +70,13 @@ client.on('messageCreate', message => {
 
         const commandName = args.shift().toLowerCase();
 
-        const command = fs.readdirSync('./working-commands').filter(file => file.endsWith('.js'));
+        const command = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
         try {
 
             if (!command) return;
 
-            const commandFile = require(`./working-commands/${commandName}.js`);
+            const commandFile = require(`./commands/${commandName}.js`);
 
             commandFile.execute(message, args);
 
@@ -85,8 +84,14 @@ client.on('messageCreate', message => {
 
             if (err.message.includes('Cannot find module')) {
 
-                message.reply('El comando no existe');
-                message.channel.send('Error:' + err);
+                const embed = new EmbedBuilder()
+                    .setColor('#ff37ff')
+                    .setAuthor({ text: 'Error' })
+                    .setTitle('El comando no existe')
+                    .setDescription('error: ' + err.message)
+                    .setTimestamp()
+                    .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
+                message.channel.send({embeds: [embed]});
 
                 console.log(`${message.author.tag} ha intentado ejecutar el comando ${commandName} pero no existe`);
 
@@ -96,8 +101,13 @@ client.on('messageCreate', message => {
 
                 console.log(err);
 
-                message.reply('Ha ocurrido un error al ejecutar el comando');
-                message.channel.send('Error:' + err);
+                const embed = new EmbedBuilder()
+                    .setColor('#ff37ff')
+                    .setTitle('Error')
+                    .setDescription('error: ' + err.message)
+                    .setTimestamp()
+                    .setFooter({ text: 'By GHCO | Pedido por ' + message.author.tag, icon_url: message.author.avatarURL() });
+                message.channel.send({embeds: [embed]});
 
                 return;
             }

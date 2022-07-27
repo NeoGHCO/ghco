@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection, Message } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { Permissions } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "kick",
@@ -15,6 +13,11 @@ module.exports = {
             message.channel.send("Debes mencionar a un usuario");
             return;
         }
+        //comprueba si el usuario es el autor del mensaje
+        if (message.author.id === member.id) {
+            message.channel.send("No puedes expulsarte a ti mismo");
+            return;
+        }
         if (!member.kickable) {
             message.channel.send("No puedo expulsar a este usuario");
             return;
@@ -26,7 +29,7 @@ module.exports = {
         }
         member.kick(reason)
             .catch(error => message.channel.send(`No puedo expulsar a el usuario '${member.user.tag}' porque: ${error}`));
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('Expulsado')
             .setDescription(`Un usuario ha sido expulsado por ${message.author.tag}`)
@@ -36,7 +39,7 @@ module.exports = {
                 { name: 'Fecha', value: message.createdAt.toLocaleString(), inline: true },
             )
             .setTimestamp()
-            .setFooter('By: GHCO');
+            .setFooter({ name: 'By GHCO | Pedido por: ' + message.author.username, icon_url: message.author.avatarURL() });
         message.channel.send({embeds: [embed]});
     }
 };

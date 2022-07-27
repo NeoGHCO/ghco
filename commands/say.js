@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 //usar el file system para leer el archivo de configuracion
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
@@ -14,20 +12,22 @@ module.exports = {
         let sayMessage = args.join(' ');
 
         if (!sayMessage) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#FF37FF')
                 .setTitle('Error')
                 .setDescription('Debes ingresar un argumento valido, ejemplo: `' + prefix + 'say Hola!`')
                 .setTimestamp()
-                .setFooter('By: GHCO');
+                .setFooter({ text: 'By: GHCO | Pedido por: ' + message.author.username, iconURL: message.author.displayAvatarURL() });
             message.channel.send({embeds: [embed]});
             return;
         }
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
-            .setTitle('')
+            .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
             .setDescription(sayMessage)
+            .setTimestamp()
+            .setFooter({ text: 'By: GHCO' });
         message.channel.send({embeds: [embed]});
 
         try {

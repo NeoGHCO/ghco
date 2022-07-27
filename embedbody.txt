@@ -1,14 +1,17 @@
 //este es el cuerpo que se usara para la mayoria de todos los embeds hechos en este proyecto
 
-const { MessageEmbed } = require('discord.js');
+const Embed = new EmbedBuilder()
 
-const embed = new MessageEmbed()
-    .setColor('#ff37ff')
-    .setTitle('')
+    .setColor('#FF37FF')
+    .setAuthor({ name: '', iconURL: '' })
     .setDescription('')
+
     .addFields(
-        { name: '', value: '' },
+        { name: '', value: '', inline: true },
+        { name: '', value: '' ,inline: true}
     )
+
     .setTimestamp()
-    .setFooter('By: GHCO');
-message.channel.send({embeds: [embed]});
+    .setFooter({ text: 'By: GHCO | Pedido por: ' + message.author.username, iconURL: message.author.displayAvatarURL() });
+
+message.channel.send({ embeds: [Embed] });

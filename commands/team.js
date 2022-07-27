@@ -1,13 +1,11 @@
-const { Discord, Client, Intents, Guild, Collection } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "team",
     description: "Informacion sobre GHCO Team",
     execute(message, args) {
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('GHCO Team')
             .setDescription('')
@@ -21,7 +19,7 @@ module.exports = {
             )
             .setImage('https://i.imgur.com/TEZZFGj.png')
             .setTimestamp()
-            .setFooter('GHCO Team');
+            .setFooter({ text: 'GHCO Team' });
         message.channel.send({embeds: [embed]});
     }
 }

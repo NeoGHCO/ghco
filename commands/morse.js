@@ -1,6 +1,4 @@
-const { Discord, Client, Intents, Guild, Collection, Message } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "morse",
@@ -11,12 +9,12 @@ module.exports = {
         var morse = require('morse');
 
         if (!texto) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#FF37FF')
                 .setTitle('Error')
                 .setDescription('Debes escribir un mensaje para convertirlo a morse')
                 .setTimestamp()
-                .setFooter('By: GHCO');
+                .setFooter({ name: 'By GHCO | Pedido por: ' + message.author.username, icon_url: message.author.avatarURL() });
             message.channel.send({embeds: [embed]});
             return;
         }
@@ -24,7 +22,7 @@ module.exports = {
         var encoded = morse.encode(texto);
         var decoded = morse.decode(encoded);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('Morse')
             .setDescription('Aquí tienes tu texto traducido')
@@ -33,7 +31,7 @@ module.exports = {
                 { name: 'Decodificado', value: decoded, inline: true }
             )
             .setTimestamp()
-            .setFooter('By: GHCO');
+            .setFooter({ name: 'By GHCO | Pedido por: ' + message.author.username, icon_url: message.author.avatarURL() });
         message.channel.send({embeds: [embed]});
     }
 };

@@ -1,14 +1,11 @@
-const { channelMention } = require('@discordjs/builders');
-const { Discord, Client, Intents, Guild, Collection } = require('discord.js');
-const client = new Client({ intents: [ "GUILDS", "GUILD_MESSAGES" ] });
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "info",
     description: "Informacion sobre el bot",
     execute(message, args) {
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#FF37FF')
             .setTitle('Informacion')
             .setDescription('')
@@ -23,7 +20,7 @@ module.exports = {
             .addField('Pagina Web', 'Para visitar la pagina web de GHCO, haz click [aqui](https://ghco.weebly.com/)')
             .setImage('https://i.imgur.com/xCw5TSm.png')
             .setTimestamp()
-            .setFooter('By: GHCO');
+            .setFooter({ name: 'By GHCO | Pedido por: ' + message.author.username, icon_url: message.author.avatarURL() });
         message.channel.send({embeds: [embed]});
     }
 }
